@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Gifting - Alpha Mobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="product-detail.css">
+    <style>
+        .gifting-page-wrapper { padding-top: 15px; padding-bottom: 60px; }
+        .gifting-hero {
+            border-radius: 18px;
+            padding: 36px 40px;
+            margin-bottom: 36px;
+            color: #f9fafb;
+            background: radial-gradient(circle at 10% 20%, #f97316 0, #b91c1c 28%, #020617 70%);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        .gifting-hero-inner { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr); gap: 32px; align-items: center; }
+        .gifting-eyebrow { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; opacity: .9; margin-bottom: 10px; }
+        .gifting-heading { font-size: 34px; line-height: 1.1; margin-bottom: 10px; }
+        .gifting-heading span { color: #fde68a; }
+        .gifting-sub { font-size: 15px; max-width: 460px; color: #e5e7eb; margin-bottom: 22px; }
+        .gifting-badges { display:flex; flex-wrap:wrap; gap:10px; }
+        .gifting-badge { padding:8px 14px; border-radius:999px; font-size:13px; background:rgba(15,23,42,0.7); border:1px solid rgba(248,250,252,0.2); display:flex; align-items:center; gap:6px; }
+        .gifting-badge-icon { width:22px; height:22px; border-radius:999px; background:#f97316; display:flex; align-items:center; justify-content:center; font-size:13px; }
+        .gifting-hero-media { display:flex; justify-content:flex-end; position:relative; }
+        .gifting-gift-stack { position:relative; width:280px; max-width:100%; }
+        .gifting-gift-card { position:absolute; border-radius:18px; padding:14px 16px; background:rgba(15,23,42,0.9); color:#e5e7eb; box-shadow:0 18px 45px rgba(15,23,42,.8); font-size:12px; max-width:190px; }
+        .gifting-gift-card.small-top { top:-16px; right:-10px; }
+        .gifting-gift-card.bottom { bottom:-10px; left:-8px; }
+        .gifting-gift-card strong { display:block; font-size:13px; margin-bottom:4px; }
+        .gifting-gift-image {
+            border-radius:22px;
+            overflow:hidden;
+            background:linear-gradient(145deg,#020617,#111827);
+            padding:18px 18px 6px;
+            box-shadow:0 26px 65px rgba(15,23,42,.85);
+        }
+        .gifting-gift-image-grid { display:flex; gap:10px; justify-content:center; align-items:flex-end; }
+        .gifting-gift-image-grid img { max-height:120px; object-fit:contain; filter:drop-shadow(0 10px 20px rgba(0,0,0,.6)); }
+        .gifting-gift-caption { margin-top:10px; font-size:12px; text-align:center; opacity:.85; }
+        .gifting-main-section { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:32px; align-items:flex-start; }
+        .gifting-copy h1 { font-size:26px; margin-bottom:14px; color:#020617; }
+        .gifting-copy p { font-size:14px; line-height:1.7; color:#4b5563; margin-bottom:10px; }
+        .gifting-copy ul { margin-top:10px; display:grid; gap:6px; }
+        .gifting-copy li { font-size:14px; color:#374151; }
+        .gifting-copy li::before { content:"• "; color:#f97316; font-weight:bold; }
+        .gifting-form-card { background:#ffffff; border-radius:16px; padding:24px 22px; border:1px solid #e5e7eb; box-shadow:0 16px 40px rgba(15,23,42,0.12); }
+        .gifting-form-title { font-size:20px; margin-bottom:6px; color:#020617; }
+        .gifting-form-sub { font-size:13px; margin-bottom:18px; color:#6b7280; }
+        .gifting-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+        .gifting-form-group { margin-bottom:12px; }
+        .gifting-form-group label { display:block; font-size:12px; margin-bottom:4px; color:#4b5563; }
+        .gifting-form-group input,
+        .gifting-form-group textarea,
+        .gifting-form-group select { width:100%; border-radius:8px; border:1px solid #cbd5e1; padding:9px 11px; font-size:13px; transition:border-color .15s, box-shadow .15s; }
+        .gifting-form-group textarea { resize:vertical; min-height:80px; }
+        .gifting-form-group input:focus,
+        .gifting-form-group textarea:focus,
+        .gifting-form-group select:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 1px rgba(37,99,235,.4); }
+        .gifting-form-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:6px; flex-wrap:wrap; }
+        .gifting-note { font-size:11px; color:#6b7280; max-width:240px; }
+        .gifting-submit-btn { background:#16a34a; color:#fff; border:none; border-radius:999px; padding:10px 26px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 14px 34px rgba(22,163,74,0.6); transition:transform .18s, box-shadow .18s, background .18s; }
+        .gifting-submit-btn:hover { background:#15803d; transform:translateY(-1px); box-shadow:0 18px 40px rgba(22,163,74,0.7); }
+        .gifting-submit-btn:active { transform:translateY(0); box-shadow:0 8px 20px rgba(22,163,74,0.6); }
+        @media (max-width: 1024px) {
+            .gifting-hero { padding:26px 22px; margin-top:16px; }
+            .gifting-hero-inner { grid-template-columns:1fr; }
+            .gifting-main-section { grid-template-columns:1fr; }
+            .gifting-hero-media { justify-content:flex-start; }
+        }
+        @media (max-width: 640px) {
+            .gifting-heading { font-size:26px; }
+            .gifting-gift-stack { width:220px; margin-top:10px; }
+            .gifting-form-card { padding:20px 18px; }
+            .gifting-form-grid { grid-template-columns:1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-promo-bar">
+            <div class="promo-content">
+                <span class="promo-message">GET 10% OFF ON YOUR FIRST PURCHASE. Use code <span class="promo-code">ALPHA10</span></span>
+                <div class="contact-info"></div>
+            </div>
+        </div>
+
+        <nav class="main-navbar">
+            <div class="navbar-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <span class="ambrane-logo"><img src="images/Alpha logo web.png" height="10"></span>
+                    </a>
+                </div>
+
+                <ul class="nav-links">
+                    <li class="mega-dropdown-trigger">
+                       <a href="#">Shop All <i class="arrow down"></i></a>
+                    
+                    <div class="mega-dropdown-menu">
+                        <div class="mega-menu-inner">
+                            <div class="mega-menu-item">
+                                <div class="menu-image">
+                                    <img src="images/Charging.png" alt="Charging Devices">
+                                </div>
+                                <a href="products.html?category=chargers"><div class="menu-title" style="cursor: pointer;">Charging</div></a>
+                                <ul>
+                                    <li><a href="product-detail.html?id=honeywell" class="mega-menu-link">Car charger</a></li>
+                                    <li><a href="products.html?category=chargers" class="mega-menu-link">Chargers</a></li>
+                                    <li><a href="product-detail.html?id=bestor" class="mega-menu-link">Cables</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mega-menu-item">
+                                <div class="menu-image">
+                                    <img src="images/Airpoding.png" alt="Audio Devices">
+                                </div>
+                                <a href="products.html?category=audio"><div class="menu-title" style="cursor: pointer;">Audio Devices</div></a>
+                                <ul>
+                                    <li><a href="product-detail.html?id=firebolt" class="mega-menu-link">Wireless Earbuds</a></li>
+                                    <li><a href="product-detail.html?id=truke" class="mega-menu-link">Wireless Earphones</a></li>
+                                    <li><a href="product-detail.html?id=ptron" class="mega-menu-link">Wired Earphones</a></li>
+                                    <li><a href="product-detail.html?id=ptronspeaker" class="mega-menu-link">Speakers</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mega-menu-item">
+                                <div class="menu-image"><img src="images/Mobile cover.png" alt="Appliances"></div>
+                                <a href="products.html?category=phone-cases"><div class="menu-title" style="cursor: pointer;">Mobile Covers</div></a>
+                                <ul><li><a href="product-detail.html?id=slim-case" class="mega-menu-link">Slim case</a></li>
+                                <li><a href="product-detail.html?id=rugged-case" class="mega-menu-link">Rugged case</a></li>
+                                <li><a href="product-detail.html?id=wallet-case" class="mega-menu-link">Wallet case</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-item">
+                                <div class="menu-image"><img src="images/Tempered-glass.png" alt="Mobile Accessories"></div>
+                                <a href="products.html?category=screen-protectors"><div class="menu-title" style="cursor: pointer;">Screen Protectors</div></a>
+                                <ul><li><a href="product-detail.html?id=torras" class="mega-menu-link">Tempered Glass</a></li>
+                                    <li><a href="product-detail.html?id=xtrength" class="mega-menu-link">Film Protectors</a></li>
+                                    <li><a href="product-detail.html?id=opentech" class="mega-menu-link">Privacy Filters</a></li>
+                                </ul>
+                                
+                            </div>
+                            <div class="mega-menu-item">
+                                <div class="menu-image"><img src="images/PowerBank10,000.png" alt="IT Accessories"></div>
+                                <a href="products.html?category=power-banks"><div class="menu-title" style="cursor: pointer;">Power Banks</div></a>
+                                <ul><li><a href="product-detail.html?id=anker" class="mega-menu-link">Magsafe Powerbank</a></li>
+                                <li><a href="product-detail.html?id=spigen" class="mega-menu-link">Mini Powerbank</a></li>
+                                <li><a href="product-detail.html?id=ankerpower" class="mega-menu-link">20,000 Mah Powerbank</a></li>
+                                 <li><a href="product-detail.html?id=spigenpower2" class="mega-menu-link">30,000 Mah Powerbank</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-item">
+                                <div class="menu-image"><img src="images/smart watch.jpg" alt="Wearables"></div>
+                                <a href="products.html?category=wearables"><div class="menu-title" style="cursor: pointer;">Wearables</div></a>
+                                <ul><li><a href="product-detail.html?id=fireboltsmart" class="mega-menu-link">Ultra Model</a></li>
+                                <li><a href="product-detail.html?id=boatsmart" class="mega-menu-link">Round dial</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                    <li><a href="products.html?category=all">Products</a></li>
+                    <li><a href="alpha-gifting.html">Alpha Gifting</a></li>
+                    <li><a href="customer-support.html">Customer Support</a></li>
+                </ul>
+
+                <div class="nav-icons">
+                    <a href="#" class="icon-btn" id="searchToggle"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#000"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></a>
+                    <div class="search-bar-full" id="searchArea">
+                        <input type="text" placeholder="Search for products...">
+                    </div>
+                    <a href="#" class="user-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#000"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg></a>
+                    <a href="#" class="cart-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#000"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q33 0 56.5 23.5T440-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div id="mobileOverlay" class="mobile-overlay"></div>
+
+    <main class="main-wrapper gifting-page-wrapper">
+        <section class="gifting-hero" aria-label="Alpha gifting hero">
+            <div class="gifting-hero-inner">
+                <div>
+                    <div class="gifting-eyebrow">ALPHA GIFTING PROGRAM</div>
+                    <h1 class="gifting-heading">Tired of Generic Gifts?<br><span>Make Every Box Feel Premium.</span></h1>
+                    <p class="gifting-sub">Reward your teams, clients and partners with technology gifts that they will actually use every day. From power banks to audio, we create curated hampers with your brand at the centre.</p>
+                    <div class="gifting-badges">
+                        <div class="gifting-badge"><span class="gifting-badge-icon">🏷</span><span>Custom logo &amp; packaging</span></div>
+                        <div class="gifting-badge"><span class="gifting-badge-icon">📦</span><span>Bulk &amp; pan-India delivery</span></div>
+                        <div class="gifting-badge"><span class="gifting-badge-icon">⭐</span><span>Corporate-grade quality</span></div>
+                        <div class="gifting-badge"><span class="gifting-badge-icon">⚡</span><span>Quick TAT for campaigns</span></div>
+                    </div>
+                </div>
+                <div class="gifting-hero-media" aria-hidden="true">
+                    <div class="gifting-gift-stack">
+                        <div class="gifting-gift-image">
+                            <div class="gifting-gift-image-grid">
+                                <img src="images/Powerbank.png" alt="Power bank">
+                                <img src="images/Speaker.jpg" alt="Speaker">
+                                <img src="images/Mobile stand.jpg" alt="Mobile stand">
+                            </div>
+                            <div class="gifting-gift-caption">Mix & match Alpha products into a single premium gifting experience.</div>
+                        </div>
+                        <div class="gifting-gift-card small-top">
+                            <strong>Branded kits from 100 pcs</strong>
+                            Curated combos for onboarding, events &amp; festive campaigns.
+                        </div>
+                        <div class="gifting-gift-card bottom">
+                            <strong>Pan-India shipping</strong>
+                            Ship to multiple addresses in one go with tracking support.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section aria-label="Alpha gifting details and enquiry" class="gifting-main-section">
+            <article class="gifting-copy">
+                <h1>Corporate &amp; Bulk Gifting, the Alpha Way.</h1>
+                <p>Whether you are welcoming new employees, thanking long-term customers or planning a festive drop, Alpha Mobile helps you craft gifts that feel thoughtful and premium.</p>
+                <p>Choose from our most-loved power banks, audio wearables, smartwatches and accessories, then add your brand through engraving, custom sleeves or complete box design.</p>
+                <ul>
+                    <li>Curated gift hampers based on your budget and theme.</li>
+                    <li>Multiple branding options on products and packaging.</li>
+                    <li>Dedicated gifting specialist for brief, samples &amp; approvals.</li>
+                    <li>Doorstep delivery to a single office or thousands of addresses.</li>
+                </ul>
+                <p>Share a few details in the form and our team will get in touch with concepts and pricing within one business day.</p>
+            </article>
+
+            <aside class="gifting-form-card" aria-label="Alpha gifting enquiry form">
+                <h2 class="gifting-form-title">Tell us about your gifting requirement</h2>
+                <p class="gifting-form-sub">Fill this quick form and our corporate gifting team will reach out with ideas and a customised quote.</p>
+                <form action="#" method="post" class="gifting-form">
+                    <div class="gifting-form-grid">
+                        <div class="gifting-form-group">
+                            <label for="ag-name">Full Name*</label>
+                            <input type="text" id="ag-name" name="name" required>
+                        </div>
+                        <div class="gifting-form-group">
+                            <label for="ag-phone">Phone Number*</label>
+                            <input type="tel" id="ag-phone" name="phone" required>
+                        </div>
+                        <div class="gifting-form-group">
+                            <label for="ag-email">Work Email*</label>
+                            <input type="email" id="ag-email" name="email" required>
+                        </div>
+                        <div class="gifting-form-group">
+                            <label for="ag-company">Company / Organisation</label>
+                            <input type="text" id="ag-company" name="company">
+                        </div>
+                    </div>
+                    <div class="gifting-form-group">
+                        <label for="ag-quantity">Approx. Quantity*</label>
+                        <select id="ag-quantity" name="quantity" required>
+                            <option value="" disabled selected>Select range</option>
+                            <option value="25-100">25 - 100 units</option>
+                            <option value="100-250">100 - 250 units</option>
+                            <option value="250-500">250 - 500 units</option>
+                            <option value="500+">500+ units</option>
+                        </select>
+                    </div>
+                    <div class="gifting-form-group">
+                        <label for="ag-message">Your Requirement*</label>
+                        <textarea id="ag-message" name="message" rows="4" placeholder="Eg. Diwali gifting for 300 employees, budget per box, preferred categories, timelines…" required></textarea>
+                    </div>
+                    <div class="gifting-form-footer">
+                        <p class="gifting-note">By submitting this form, you agree to be contacted by the Alpha Mobile team with customised gifting options.</p>
+                        <button type="submit" class="gifting-submit-btn">Submit Enquiry</button>
+                    </div>
+                </form>
+            </aside>
+        </section>
+
+        <section class="newsletter-band" aria-label="Subscribe to our newsletter">
+            <div class="newsletter-container">
+                <h2 class="newsletter-title">Stay updated on corporate offers</h2>
+                <p class="newsletter-subtitle">Get early access to festive gifting ranges, bulk deals and new product launches.</p>
+                <form class="newsletter-form" action="#" method="post" aria-label="Newsletter form">
+                    <input type="email" class="newsletter-input" placeholder="Your Work Email" required aria-label="Your Work Email">
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Modern Footer (reused from home page) -->
+  <footer class="footer-modern">
+    <div class="footer-top">
+      <div class="brand-block">
+        <img src="images/Alpha logo web.png" alt="Alpha Mobile" class="footer-logo">
+        <div class="social-links" aria-label="Social links">
+         <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 640 640"><path fill="#010541" d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z"/></svg>
+                        <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 640 640"><path fill="#1c2b45" d="M188.1 318.6C188.1 343.5 195.1 367.8 208.3 388.7L211.4 393.7L198.1 442.3L248 429.2L252.8 432.1C273 444.1 296.2 450.5 319.9 450.5L320 450.5C392.6 450.5 453.3 391.4 453.3 318.7C453.3 283.5 438.1 250.4 413.2 225.5C388.2 200.5 355.2 186.8 320 186.8C247.3 186.8 188.2 245.9 188.1 318.6zM370.8 394C358.2 395.9 348.4 394.9 323.3 384.1C286.5 368.2 261.5 332.6 256.4 325.4C256 324.8 255.7 324.5 255.6 324.3C253.6 321.7 239.4 302.8 239.4 283.3C239.4 264.9 248.4 255.4 252.6 251C252.9 250.7 253.1 250.5 253.3 250.2C256.9 246.2 261.2 245.2 263.9 245.2C266.5 245.2 269.2 245.2 271.5 245.3L272.3 245.3C274.6 245.3 277.5 245.3 280.4 252.1C281.6 255 283.4 259.4 285.3 263.9C288.6 271.9 292 280.2 292.6 281.5C293.6 283.5 294.3 285.8 292.9 288.4C289.5 295.2 286 298.8 283.6 301.4C280.5 304.6 279.1 306.1 281.3 310C296.6 336.3 311.9 345.4 335.2 357.1C339.2 359.1 341.5 358.8 343.8 356.1C346.1 353.5 353.7 344.5 356.3 340.6C358.9 336.6 361.6 337.3 365.2 338.6C368.8 339.9 388.3 349.5 392.3 351.5C393.1 351.9 393.8 352.2 394.4 352.5C397.2 353.9 399.1 354.8 399.9 356.1C400.8 358 400.8 366 397.5 375.2C394.2 384.5 378.4 392.9 370.8 394zM544 160C544 124.7 515.3 96 480 96L160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160zM244.1 457.9L160 480L182.5 397.8C168.6 373.8 161.3 346.5 161.3 318.5C161.4 231.1 232.5 160 319.9 160C362.3 160 402.1 176.5 432.1 206.5C462 236.5 480 276.3 480 318.7C480 406.1 407.3 477.2 319.9 477.2C293.3 477.2 267.2 470.5 244.1 457.9z"/></svg></a>
+                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 640 640"><path d="M160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160C544 124.7 515.3 96 480 96L160 96zM457.1 180L353.3 298.6L475.4 460L379.8 460L305 362.1L219.3 460L171.8 460L282.8 333.1L165.7 180L263.7 180L331.4 269.5L409.6 180L457.1 180zM419.3 431.6L249.4 206.9L221.1 206.9L392.9 431.6L419.3 431.6z"/></svg></a>
+                        <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" height="30" width="30"viewBox="0 0 640 640"><path d="M581.7 188.1C575.5 164.4 556.9 145.8 533.4 139.5C490.9 128 320.1 128 320.1 128C320.1 128 149.3 128 106.7 139.5C83.2 145.8 64.7 164.4 58.4 188.1C47 231 47 320.4 47 320.4C47 320.4 47 409.8 58.4 452.7C64.7 476.3 83.2 494.2 106.7 500.5C149.3 512 320.1 512 320.1 512C320.1 512 490.9 512 533.5 500.5C557 494.2 575.5 476.3 581.8 452.7C593.2 409.8 593.2 320.4 593.2 320.4C593.2 320.4 593.2 231 581.8 188.1zM264.2 401.6L264.2 239.2L406.9 320.4L264.2 401.6z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Charging</h3>
+          <ul>
+              <li><a href="product-detail.html?id=honeywell" class="mega-menu-link">Car charger</a></li>
+                                    <li><a href="products.html?category=chargers" class="mega-menu-link">Chargers</a></li>
+                                    <li><a href="product-detail.html?id=bestor" class="mega-menu-link">Cables</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Audio Devices</h3>
+          <ul>
+            <li><a href="product-detail.html?id=firebolt" class="mega-menu-link">Wireless Earbuds</a></li>
+                                    <li><a href="product-detail.html?id=truke" class="mega-menu-link">Wireless Earphones</a></li>
+                                    <li><a href="product-detail.html?id=ptron" class="mega-menu-link">Wired Earphones</a></li>
+                                    <li><a href="product-detail.html?id=ptronspeaker" class="mega-menu-link">Speakers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Mobile Covers</h3>
+          <ul>
+            <li><a href="product-detail.html?id=slim-case" class="mega-menu-link">Slim case</a></li>
+                                <li><a href="product-detail.html?id=rugged-case" class="mega-menu-link">Rugged case</a></li>
+                                <li><a href="product-detail.html?id=wallet-case" class="mega-menu-link">Wallet case</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Tempered Glass</h3>
+          <ul>
+            <li><a href="product-detail.html?id=torras" class="mega-menu-link">Tempered Glass</a></li>
+                                    <li><a href="product-detail.html?id=xtrength" class="mega-menu-link">Film Protectors</a></li>
+                                    <li><a href="product-detail.html?id=opentech" class="mega-menu-link">Privacy Filters</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Wearables</h3>
+          <ul>
+            <li><a href="product-detail.html?id=anker" class="mega-menu-link">Magsafe Powerbank</a></li>
+                                <li><a href="product-detail.html?id=spigen" class="mega-menu-link">Mini Powerbank</a></li>
+                                <li><a href="product-detail.html?id=ankerpower" class="mega-menu-link">20,000 Mah Powerbank</a></li>
+                                 <li><a href="product-detail.html?id=spigenpower2" class="mega-menu-link">30,000 Mah Powerbank</a></li>
+        </div>
+        <div class="footer-col">
+          <h3>More</h3>
+          <ul>
+            <li><a href="#">Read Our Blogs</a></li>
+            <li><a href="#">Awards</a></li>
+            <li><a href="#">Website Terms Of Usage</a></li>
+            <li><a href="#">E-Waste Management</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">App Privacy Policy</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Refund Policy</a></li>
+            <li><a href="#">Cancel. & Replacement Policy</a></li>
+            <li><a href="#">Terms Of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <aside class="support-card" aria-label="Customer Support">
+        <h3>Customer Support</h3>
+        <ul>
+          <li>📞 +91-11-69951111</li>
+          <li>💬 Say Hi! on Whatsapp</li>
+          <li>📧 care@alphamobile.com</li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 Alpha Mobile. All rights reserved.</p>
+    </div>
+  </footer>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+</body>
+</html>

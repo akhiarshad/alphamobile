@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Alpha Mobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="product-detail.css">
+    <style>
+        .auth-page-wrapper { min-height: 100vh; padding-top: 40px; padding-bottom: 60px; display: flex; flex-direction: column; }
+        .auth-main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .auth-container { max-width: 960px; width: 100%; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+        .auth-hero { color: #020617; }
+        .auth-eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #6366f1; margin-bottom: 8px; }
+        .auth-heading { font-size: 32px; line-height: 1.2; margin-bottom: 10px; }
+        .auth-sub { font-size: 14px; color: #4b5563; max-width: 380px; margin-bottom: 18px; }
+        .auth-highlight-list { display: grid; gap: 8px; font-size: 13px; color: #374151; }
+        .auth-highlight-item { display: flex; align-items: center; gap: 8px; }
+        .auth-badge-icon { width: 22px; height: 22px; border-radius: 999px; background: #eef2ff; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #4f46e5; }
+        .auth-card { background: #ffffff; border-radius: 18px; padding: 26px 24px; box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18); border: 1px solid #e5e7eb; }
+        .auth-card h1 { font-size: 22px; margin-bottom: 4px; color: #020617; }
+        .auth-card p { font-size: 13px; color: #6b7280; margin-bottom: 18px; }
+        .auth-form-group { margin-bottom: 14px; }
+        .auth-form-group label { display: block; font-size: 12px; color: #4b5563; margin-bottom: 5px; }
+        .auth-form-group input { width: 100%; border-radius: 10px; border: 1px solid #cbd5e1; padding: 10px 12px; font-size: 14px; transition: border-color .15s, box-shadow .15s; }
+        .auth-form-group input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 1px rgba(79,70,229,.35); }
+        .auth-extra-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 14px; color: #6b7280; }
+        .auth-extra-row a { color: #4f46e5; }
+        .auth-submit-btn { width: 100%; background: linear-gradient(135deg,#4f46e5,#2563eb); border: none; border-radius: 999px; padding: 11px 16px; font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; box-shadow: 0 16px 40px rgba(37,99,235,.55); transition: transform .18s, box-shadow .18s, background .18s; }
+        .auth-submit-btn:hover { transform: translateY(-1px); box-shadow: 0 20px 48px rgba(37,99,235,.65); }
+        .auth-submit-btn:active { transform: translateY(0); box-shadow: 0 10px 28px rgba(37,99,235,.5); }
+        .auth-divider { margin: 16px 0; display: flex; align-items: center; gap: 10px; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: .12em; }
+        .auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: #e5e7eb; }
+        .auth-alt-link { font-size: 13px; color: #4b5563; margin-top: 6px; text-align: center; }
+        .auth-alt-link a { color: #4f46e5; font-weight: 500; }
+        @media (max-width: 900px) { .auth-container { grid-template-columns: 1fr; max-width: 520px; } .auth-main { padding-top: 0; } }
+        @media (max-width: 640px) { .auth-heading { font-size: 26px; } .auth-card { padding: 22px 18px; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-promo-bar">
+            <div class="promo-content">
+                <span class="promo-message">GET 10% OFF ON YOUR FIRST PURCHASE. Use code <span class="promo-code">ALPHA10</span></span>
+                <div class="contact-info"></div>
+            </div>
+        </div>
+        <nav class="main-navbar">
+            <div class="navbar-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <span class="ambrane-logo"><img src="images/Alpha logo web.png" height="10"></span>
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li class="mega-dropdown-trigger">
+                        <a href="#">Shop All <i class="arrow down"></i></a>
+                        <div class="mega-dropdown-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-item">
+                                    <div class="menu-image"><img src="images/Charging.png" alt="Charging Devices"></div>
+                                    <div class="menu-title">Charging</div>
+                                    <ul>
+                                        <li><a href="product-detail.html?id=powerbank" class="mega-menu-link">Power Banks</a></li>
+                                        <li><a href="product-detail.html?id=powerbank" class="mega-menu-link">Powerstations</a></li>
+                                        <li><a href="product-detail.html?id=charger" class="mega-menu-link">Chargers</a></li>
+                                        <li><a href="product-detail.html?id=charger" class="mega-menu-link">Cables</a></li>
+                                        <li><a href="product-detail.html?id=charger" class="mega-menu-link">Extension Board</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-menu-item">
+                                    <div class="menu-image"><img src="images/Airpoding.png" alt="Audio Devices"></div>
+                                    <div class="menu-title">Audio Devices</div>
+                                    <ul>
+                                        <li><a href="product-detail.html?id=earbuds" class="mega-menu-link">Wireless Earbuds</a></li>
+                                        <li><a href="product-detail.html?id=earbuds" class="mega-menu-link">Wireless Earphones</a></li>
+                                        <li><a href="product-detail.html?id=earbuds" class="mega-menu-link">Wired Earphones</a></li>
+                                        <li><a href="product-detail.html?id=speaker" class="mega-menu-link">Speakers</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-menu-item">
+                                    <div class="menu-image"><img src="images/trimmer.jpg" alt="Appliances"></div>
+                                    <div class="menu-title">Appliances</div>
+                                    <ul><li><a href="index.html#featured-products" class="mega-menu-link">Trimmer</a></li></ul>
+                                </div>
+                                <div class="mega-menu-item">
+                                    <div class="menu-image"><img src="images/mobile sta.png" alt="Mobile Accessories"></div>
+                                    <div class="menu-title">Mobile Accessories</div>
+                                    <ul><li><a href="index.html#featured-products" class="mega-menu-link">Mobile Stands</a></li></ul>
+                                </div>
+                                <div class="mega-menu-item">
+                                    <div class="menu-image"><img src="images/keymouse.jpg" alt="IT Accessories"></div>
+                                    <div class="menu-title">IT Accessories</div>
+                                    <ul><li><a href="index.html#featured-products" class="mega-menu-link">Keyboard & Mouse</a></li></ul>
+                                </div>
+                                <div class="mega-menu-item">
+                                    <div class="menu-image"><img src="images/smart watch.jpg" alt="Wearables"></div>
+                                    <div class="menu-title">Wearables</div>
+                                    <ul><li><a href="product-detail.html?id=smartwatch" class="mega-menu-link">Smart Watches</a></li></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="products.html?category=all">Products</a></li>
+                    <li><a href="alpha-gifting.html">Alpha Gifting</a></li>
+                    <li><a href="customer-support.html">Customer Support</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <a href="#" class="icon-btn" id="searchToggle"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#000"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></a>
+                    <div class="search-bar-full" id="searchArea">
+                        <input type="text" placeholder="Search for products...">
+                    </div>
+                    <a href="login.html" class="user-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#000"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg></a>
+                    <a href="cart.html" class="cart-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#000"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q33 0 56.5 23.5T440-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-page-wrapper">
+        <section class="auth-main" aria-label="Login to Alpha Mobile">
+            <div class="auth-container">
+                <div class="auth-hero">
+                    <div class="auth-eyebrow">WELCOME BACK</div>
+                    <h1 class="auth-heading">Sign in to manage your Alpha Mobile experience.</h1>
+                    <p class="auth-sub">Track your orders, manage warranty registrations and save your favourite products in one place.</p>
+                    <div class="auth-highlight-list">
+                        <div class="auth-highlight-item"><div class="auth-badge-icon">🔒</div><span>Secure login with encrypted credentials</span></div>
+                        <div class="auth-highlight-item"><div class="auth-badge-icon">📦</div><span>View past orders &amp; track deliveries</span></div>
+                        <div class="auth-highlight-item"><div class="auth-badge-icon">⭐</div><span>Save wishlists and compare products</span></div>
+                    </div>
+                </div>
+
+                <div class="auth-card">
+                    <h1>Login</h1>
+                    <p>Enter your details to continue.</p>
+                    <form action="#" method="post" class="auth-form">
+                        <div class="auth-form-group">
+                            <label for="login-email">Email*</label>
+                            <input type="email" id="login-email" name="email" required>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="login-password">Password*</label>
+                            <input type="password" id="login-password" name="password" required>
+                        </div>
+                        <div class="auth-extra-row">
+                            <label><input type="checkbox" name="remember" style="margin-right:6px;"> Remember me</label>
+                            <a href="#">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="auth-submit-btn">Login</button>
+                        <div class="auth-divider">Or</div>
+                        <p class="auth-alt-link">New to Alpha Mobile? <a href="signup.html">Create an account</a></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-modern">
+        <div class="footer-top">
+            <div class="brand-block">
+                <img src="images/Alpha logo web.png" alt="Alpha Mobile" class="footer-logo">
+                <div class="social-links" aria-label="Social links">
+                    <a href="#" aria-label="Facebook">🔵</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="YouTube">▶️</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Alpha Mobile. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
