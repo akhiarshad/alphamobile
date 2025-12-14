@@ -958,7 +958,6 @@ body.menu-open{ overflow:hidden; }
     width: 100%;
     background:none;
     position: absolute;
-     margin-top: 50px;
     left: 0;
     top: 100%;
     padding: 12px 40px;
@@ -1036,7 +1035,7 @@ body.menu-open{ overflow:hidden; }
   /* Search bar responsive */
   @media (max-width: 993px) {
     .search-bar-full {
-        top: 15%;
+        top: 100%;
     }
     .search-area input {
       width: 94%;
