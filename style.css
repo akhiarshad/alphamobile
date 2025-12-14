@@ -957,8 +957,8 @@ body.menu-open{ overflow:hidden; }
 .search-bar-full {
     width: 100%;
     background:none;
-    position: absolute;    
-    margin-top: 50px;
+    position: absolute;
+     margin-top: 50px;
     left: 0;
     top: 100%;
     padding: 12px 40px;
